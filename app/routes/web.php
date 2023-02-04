@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\QuestionsController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\NewsController;
 use \App\Http\Controllers\NewsCategoryController;
@@ -30,20 +31,21 @@ Route::group(['prefix' => 'admin', 'as'=>'admin.'], static function() {
     Route::resource('categories', AdminCategoryController::class);
     Route::resource('news', AdminNewsController::class);
     Route::resource('users', AdminUsersController::class);
+    Route::resource('questions', QuestionsController::class);
 });
 
 //news routes
 Route::group(['prefix' => 'news'], static function() {
     Route::get('/', [NewsController::class, 'index'])
     ->name('news');
-    
+
     Route::get('/{id}/show', [NewsController::class, 'show'])
     ->where('id', '\d+')
     ->name('news.show');
-    
+
     Route::get('/category', [NewsCategoryController::class, 'index'])
     ->name('category');
-    
+
     Route::get('/category/{id}', [NewsCategoryController::class, 'show'])
     ->name('category.show', '\d+');
 });

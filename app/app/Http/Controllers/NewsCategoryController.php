@@ -2,17 +2,32 @@
 declare(strict_types=1);
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\QueryBuilders\CategoriesQueryBuilder;
+use Illuminate\Contracts\View\View;
 
 class NewsCategoryController extends Controller
 {
-    use NewsCategoryTrait;
-
-    public function index() {
-        return \view('news.category.index', ['news' => $this->getCategoryNews()]);
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @param CategoriesQueryBuilder $categoriesQueryBuilder
+     * @return View
+     */
+    public function show(int $id, CategoriesQueryBuilder $categoriesQueryBuilder): View
+    {
+        $news = $categoriesQueryBuilder->getNewsByCategory($id);
+        return \view('news.show', ['news' => $news,]);
     }
 
-    public function show(int $id) {
-        return \view('news.index', ['news' => $this->getCategoryNews($id)]);
-    }
+
+//    public function index(): View
+//    {
+//        return \view('news.category.index', ['news' => $this->getCategoryNews()]);
+//    }
+//
+//    public function show(int $id): View
+//    {
+//        return \view('news.index', ['news' => $this->getCategoryNews($id)]);
+//    }
 }

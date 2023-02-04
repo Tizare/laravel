@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @if(request()->routeIs('admin.users.*')) active @endif" href="{{ route('admin.users.create') }}" >
+                <a class="nav-link @if(request()->routeIs('admin.questions.*')) active @endif" href="{{ route('admin.questions.index') }}" >
                   <span data-feather="users"></span>
                   Пользователи
                 </a>
