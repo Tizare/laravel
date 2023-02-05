@@ -3,8 +3,6 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
     <h1 class="h2">Добавить новость</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-
-
         </div>
 </div>
 <div>
@@ -21,23 +19,26 @@
         </div>
         <div class="form-group">
             <label for="title">Заголовок</label>
-            <input type="text" id="title" name="title" class="form-control" value="{{ old('title') }}">
+            <input type="text" id="title" name="title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
         </div>
+        @error('title')@enderror
         <div class="form-group">
             <label for="author">Автор</label>
             <input type="text" id="author" name="author" class="form-control" value="{{ old('author') }}">
         </div>
         <div class="form-group">
             <label for="description">Описание</label>
-            <textarea id="description" name="description" class="form-control">{{ old('description') }}</textarea>
+            <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
         </div>
+        @error('description')@enderror
         <div class="form-group">
             <label for="text">Новость</label>
-            <textarea id="text" name="text" class="form-control">{{ old('text') }}</textarea>
+            <textarea id="text" name="text" class="form-control @error('description') is-invalid @enderror" >{{ old('text') }}</textarea>
         </div>
+        @error('text')@enderror
         <div class="form-group">
             <label for="status">Статус</label>
-            <select id="status" name="status" class="form-control">
+            <select id="status" name="status" class="form-control ">
                 @foreach($statusList as $status)
                 <option @if(old('status') === $status) selected @endif value="{{ $status }}">{{ $status }}</option>
                 @endforeach

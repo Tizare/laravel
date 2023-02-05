@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
@@ -25,8 +26,10 @@
       <div class="row">
         <x-admin.nav></x-admin.nav>
 
+
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-        @yield('content')
+            <x-admin.errors></x-admin.errors>
+            @yield('content')
 
         </main>
       </div>
@@ -46,6 +49,6 @@
     </script>
 
     <!-- Graphs -->
-
+    @stack('js')
   </body>
 </html>

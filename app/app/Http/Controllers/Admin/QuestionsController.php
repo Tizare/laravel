@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Questions\CreateRequest;
+use App\Http\Requests\Questions\EditRequest;
 use App\Models\Question;
 use App\QueryBuilders\QuestionsQueryBuilder;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class QuestionsController extends Controller
 {
@@ -36,19 +40,13 @@ class QuestionsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CreateRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(CreateRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'text' => 'required',
-            'phone' => 'required',
-        ]);
 
-        $question = new Question($request->except('_token'));
+        $question = new Question($request->validated());
 
         if ($question->save()) {
             return \redirect()->route('admin.questions.index')
@@ -84,13 +82,13 @@ class QuestionsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param EditRequest $request
      * @param Question $question
      * @return RedirectResponse
      */
-    public function update(Request $request, Question $question): RedirectResponse
+    public function update(EditRequest $request, Question $question): RedirectResponse
     {
-        $question = $question->fill($request->except('_token'));
+        $question = $question->fill($request->validated());
 
         if ($question->save()) {
             return \redirect()->route('admin.questions.index')
@@ -103,11 +101,18 @@ class QuestionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Question $question
+     * @return JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Question $question): JsonResponse
     {
-        //
+        try{
+            $question->delete();
+            return \response()->json('ok');
+        } catch (\Exception $exception) {
+            \Log::error($exception->getMessage(), [$exception]);
+
+            return \response()->json('error', 400);
+        }
     }
 }

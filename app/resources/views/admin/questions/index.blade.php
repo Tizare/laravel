@@ -33,7 +33,8 @@
             <td>{{ $question->name }}</td>
             <td>{{ $question->phone }}</td>
             <td>{{ $question->email }}</td>
-            <td><a href="{{ route('admin.questions.edit', ['question' => $question->id]) }}">Изм.</a> <a href="" style="color:indianred">Уд.</a></td>
+            <td><a href="{{ route('admin.questions.edit', ['question' => $question->id]) }}">Изм.</a>
+                <a href="javascript:;" class="delete" rel="{{ $question->id }}" style="color:indianred">Уд.</a></td>
             </tr>
             @empty
             <tr>
@@ -45,3 +46,35 @@
 
 </div>
 @endsection
+
+@push('js')
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function (){
+            let elements = document.querySelectorAll(".delete");
+            elements.forEach(function (elem, k){
+                elem.addEventListener("click", function () {
+                    const id = this.getAttribute('rel');
+                    if(confirm(`Подтверждаете удаление записи с ID = ${id}`)){
+                        send(`/admin/questions/${id}`).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        alert("Удаление отменено");
+                    }
+                });
+            });
+        });
+
+        async function send(url) {
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+
+            let result = await response.json();
+            return result.ok;
+        }
+    </script>
+@endpush
