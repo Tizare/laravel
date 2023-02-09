@@ -24,7 +24,8 @@
       <header class="masthead mb-auto">
         <div class="inner">
           <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link" href="#">Войти</a>
+            <a class="nav-link" href="{{ route('login') }}">Войти</a>
+            <a class="nav-link" href="{{ route('register') }}">Регистрация</a>
           </nav>
         </div>
       </header>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\QueryBuilders\QuestionsQueryBuilder;
+use App\QueryBuilders\UsersQueryBuilder;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use App\QueryBuilders\QueryBuilder;
@@ -22,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(QueryBuilder::Class, NewsQueryBuilder::class);
         $this->app->bind(QueryBuilder::Class, CategoriesQueryBuilder::class);
         $this->app->bind(QueryBuilder::class, QuestionsQueryBuilder::class);
+        $this->app->bind(QueryBuilder::class, UsersQueryBuilder::class);
     }
 
     /**

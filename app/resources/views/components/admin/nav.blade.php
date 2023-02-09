@@ -14,21 +14,21 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link @if(request()->routeIs('admin.questions.*')) active @endif" href="{{ route('admin.questions.index') }}" >
+                <a class="nav-link @if(request()->routeIs('admin.users.*')) active @endif" href="{{ route('admin.users.index') }}" >
                   <span data-feather="users"></span>
                   Пользователи
                 </a>
             </li>
             <li class="nav-item">
-            <a class="nav-link @if(request()->routeIs('admin.categories.*')) active @endif" href="{{ route('admin.categories.index') }}">
+                <a class="nav-link @if(request()->routeIs('admin.categories.*')) active @endif" href="{{ route('admin.categories.index') }}">
                   <span data-feather="bar-chart-2"></span>
                   Отчёты
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" @if(request()->routeIs('admin.questions.*')) active @endif" href="{{ route('admin.questions.index') }}">
                   <span data-feather="layers"></span>
-                  Заглушка
+                  Запросы
                 </a>
             </li>
         </ul>

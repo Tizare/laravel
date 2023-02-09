@@ -3,27 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Users\CreateRequest;
-use App\Http\Requests\Users\EditRequest;
+use App\Http\Requests\Accounts\CreateRequest;
+use App\Http\Requests\Accounts\EditRequest;
 use App\Models\User;
 use App\QueryBuilders\AccountsQueryBuilder;
-use App\QueryBuilders\UsersQueryBuilder;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class AccountsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param UsersQueryBuilder $usersQueryBuilder
+     * @param AccountsQueryBuilder $accountsQueryBuilder
      * @return View
      */
-    public function index(UsersQueryBuilder $usersQueryBuilder): View
+    public function index(AccountsQueryBuilder $accountsQueryBuilder): View
     {
-        $users = $usersQueryBuilder->getAll();
-        return \view('admin.users.index', ['users' => $users,]);
+        $users = $accountsQueryBuilder->getAll();
+        return \view('admin.accounts.index', ['users' => $users,]);
     }
 
     /**
@@ -33,7 +33,7 @@ class UsersController extends Controller
      */
     public function create(): View
     {
-        return \view('admin.users.create');
+        return \view('admin.accounts.create');
     }
 
     /**
@@ -47,7 +47,7 @@ class UsersController extends Controller
         $user = new User($createRequest->validate());
 
         if ($user->save()) {
-            return \redirect()->route('admin.users.index')->with('success');
+            return \redirect()->route('admin.accounts.index')->with('success');
         }
 
         return \back()->with('error', 'Не удалось добавить пользователя');
@@ -72,7 +72,7 @@ class UsersController extends Controller
      */
     public function edit(User $user): View
     {
-        return \view('admin.users.edit', ['user' => $user]);
+        return \view('admin.accounts.edit', ['user' => $user]);
     }
 
     /**
@@ -87,7 +87,7 @@ class UsersController extends Controller
         $user = $user->fill($request->validate());
 
         if ($user->save()) {
-            return \redirect()->route('admin.users.index')->with('success');
+            return \redirect()->route('admin.accounts.index')->with('success');
         }
 
         return \back()->with('error', 'Не удалось обновить пользователя');

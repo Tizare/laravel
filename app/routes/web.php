@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Account\IndexController as AccountController;
+use App\Http\Controllers\Admin\AccountsController as AdminAccountsController;
 use App\Http\Controllers\Admin\QuestionsController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\NewsController;
 use \App\Http\Controllers\NewsCategoryController;
@@ -24,14 +27,20 @@ Route::get('/', function () {
     return view('about');
 })->name('about');
 
-//admin routes
-Route::group(['prefix' => 'admin', 'as'=>'admin.'], static function() {
-    Route::get('/', AdminController::class)
-    ->name('index');
-    Route::resource('categories', AdminCategoryController::class);
-    Route::resource('news', AdminNewsController::class);
-    Route::resource('users', AdminUsersController::class);
-    Route::resource('questions', QuestionsController::class);
+Route::group(['middleware'=> 'auth'], static function(){
+    Route::get('/account', AccountController::class)->name('account');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('account.logout');
+
+    //admin routes
+    Route::group(['prefix' => 'admin', 'as'=>'admin.', 'middleware' => 'is_admin'], static function() {
+        Route::get('/', AdminController::class)
+        ->name('index');
+        Route::resource('categories', AdminCategoryController::class);
+        Route::resource('news', AdminNewsController::class);
+        Route::resource('users', AdminUsersController::class);
+        Route::resource('questions', QuestionsController::class);
+        Route::resource('accounts', AdminAccountsController::class);
+    });
 });
 
 //news routes
@@ -53,3 +62,7 @@ Route::group(['prefix' => 'news'], static function() {
 Route::get('/about', function () {
     return view('about');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
