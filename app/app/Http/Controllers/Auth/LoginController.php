@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\LoginEvent;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Contracts\View\View;
@@ -50,5 +51,15 @@ class LoginController extends Controller
     public function showLoginForm(): View
     {
         return view('auth.login');
+    }
+
+    public function username(): string
+    {
+        return 'email';
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        event(new LoginEvent($user));
     }
 }
