@@ -28,15 +28,18 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'min:5', 'max:200'],
-            'description' => ['required', 'string', 'min:20', 'max:200'],
-            'text' => ['required', 'string', 'min:50', 'max:1000'],
+            'title' => ['required', 'string', 'min:5', 'max:250'],
+            'description' => ['required', 'string', 'min:20', 'max:300'],
+            'text' => ['required', 'string', 'min:50', 'max:5000'],
             'author' => ['required', 'string', 'min:2', 'max:50'],
             'status' => ['required', new Enum(NewsStatus::class)],
             'category_id' => ['required', 'exists:categories,id'],
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function attributes(): array
     {
         return [
@@ -44,6 +47,9 @@ class CreateRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function messages(): array
     {
         return [

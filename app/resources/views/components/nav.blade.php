@@ -6,5 +6,6 @@
         <a class="p-2 text-muted" href="{{ route('category.show', ['id' => 3]) }}">Спорт</a>
         <a class="p-2 text-muted" href="{{ route('category.show', ['id' => 4]) }}">Игры</a>
         <a class="p-2 text-muted" href="{{ route('category.show', ['id' => 5]) }}">Интересное</a>
+        <a class="p-2 text-muted" href="{{ route('category.show', ['id' => 6]) }}">Больше новостей</a>
     </nav>
 </div>

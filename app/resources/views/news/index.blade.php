@@ -10,10 +10,10 @@
                 <a class="text-dark" href="{{ route('news.show', ['id' => $n->id]) }}">{{ $n->title }}</a>
                 </h3>
                 <div class="mb-1 text-muted">{{ $n->author}} ({{$n->created_at }})</div>
-                <p class="card-text mb-auto">{{ $n->description }}</p>
+                <p class="card-text mb-auto">{!! $n->description !!}</p>
                 <a href="{{ route('news.show', ['id' => $n->id]) }}">Подробнее</a>
             </div>
-            <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
+            <img class="card-img-right flex-auto d-none d-md-block" src="{{ Storage::disk('public')->url($n->image) }}">
         </div>
     </div>
 @empty

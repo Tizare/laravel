@@ -4,6 +4,7 @@ use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\Admin\AccountsController as AdminAccountsController;
 use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\QuestionsController;
+use App\Http\Controllers\Admin\SourcesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SocialProvidersController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,7 @@ Route::group(['middleware'=> 'auth'], static function(){
         Route::resource('news', AdminNewsController::class);
         Route::resource('users', AdminUsersController::class);
         Route::resource('questions', QuestionsController::class);
+        Route::resource('sources', SourcesController::class);
     });
 });
 
@@ -80,4 +82,8 @@ Route::group(['middleware' => 'guest'], function() {
 
     Route::get('/auth/callback/{driver}', [SocialProvidersController::class, 'callback'])
         ->where('driver', '\w+');
+});
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'is_admin']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
 });

@@ -3,12 +3,10 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 class="h2">Редактировать новость</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-
-
         </div>
     </div>
     <div>
-        <form method='post' action="{{ route('admin.news.update', ['news'=> $news]) }}">
+        <form method='post' action="{{ route('admin.news.update', ['news'=> $news]) }}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="form-group">
@@ -16,7 +14,8 @@
                 <select id="category_id" name="category_id" class="form-control">
                     <option value="0">--Выбрать--</option>
                     @foreach($categoryList as $category)
-                        <option value="{{ $category->id }}" @if((int) old('category_id') === $category->id) selected @endif >{{ $category->title }}</option>
+                        <option value="{{ $category->id }}" @if(in_array($category->id,
+                        $news->categories->pluck('id')->toArray())) selected @endif >{{ $category->title }}</option>
                     @endforeach
                 </select>
             </div>
@@ -53,3 +52,17 @@
         </form>
     </div>
 @endsection
+@push('js')
+    <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
+    <script>
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+    </script>
+    <script>
+        CKEDITOR.replace('text', options);
+    </script>
+@endpush

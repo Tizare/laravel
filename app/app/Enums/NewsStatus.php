@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum NewsStatus: string
@@ -8,6 +10,9 @@ enum NewsStatus: string
     case ACTIVE = 'active';
     case BLOCKED = 'blocked';
 
+    /**
+     * @return array
+     */
     public static function all(): array
     {
         return [

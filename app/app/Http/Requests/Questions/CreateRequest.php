@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Questions;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -31,6 +33,9 @@ class CreateRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function attributes(): array
     {
         return [
@@ -39,6 +44,9 @@ class CreateRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function messages(): array
     {
         return [

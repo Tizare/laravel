@@ -16,4 +16,6 @@
     <x-alert type='warning' message="Какое-то сообщение"></x-alert>
     <x-alert type='info' message="Какое-то сообщение"></x-alert>
 </div>
+    <br>
+    <a href="{{ route('admin.parser') }}">Парсить новости</a>
 @endsection

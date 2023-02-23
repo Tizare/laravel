@@ -6,7 +6,7 @@
         </div>
 </div>
 <div>
-    <form method='post' action="{{ route('admin.news.store') }}">
+    <form method='post' action="{{ route('admin.news.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="category_id">Категория</label>
@@ -53,3 +53,17 @@
     </form>
 </div>
 @endsection
+@push('js')
+    <script src="https://cdn.ckeditor.com/4.20.2/standard/ckeditor.js"></script>
+    <script>
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+    </script>
+    <script>
+        CKEDITOR.replace('text', options);
+    </script>
+@endpush

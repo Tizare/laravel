@@ -19,17 +19,6 @@ class NewsCategoryController extends Controller
     public function show(int $id, CategoriesQueryBuilder $categoriesQueryBuilder): View
     {
         $news = $categoriesQueryBuilder->getNewsByCategory($id);
-        return \view('news.show', ['news' => $news,]);
+        return \view('news.category.show', ['news' => $news,]);
     }
-
-
-//    public function index(): View
-//    {
-//        return \view('news.category.index', ['news' => $this->getCategoryNews()]);
-//    }
-//
-//    public function show(int $id): View
-//    {
-//        return \view('news.index', ['news' => $this->getCategoryNews($id)]);
-//    }
 }

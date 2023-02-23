@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\QueryBuilders;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -16,16 +18,27 @@ final class NewsQueryBuilder extends QueryBuilder
         $this->model = News::query();
     }
 
+    /**
+     * @return Collection
+     */
     public function getAll(): Collection
     {
         return News::query()->get();
     }
 
+    /**
+     * @param int $quantity
+     * @return LengthAwarePaginator
+     */
     public function getNewsWithPagination (int $quantity = 10): LengthAwarePaginator
     {
         return $this->model->with('categories')->paginate($quantity);
     }
 
+    /**
+     * @param int $id
+     * @return Collection
+     */
     public function getNewsById(int $id): Collection
     {
         return $this->model->where('id', $id)->get();

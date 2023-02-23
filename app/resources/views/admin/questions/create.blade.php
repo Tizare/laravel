@@ -32,21 +32,24 @@
         @csrf
         <div class="form-group">
             <label for="name">Имя заказчика</label>
-            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}">
+            <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
         </div>
+        @error('name') @enderror
         <div class="form-group">
             <label for="phone">Номер телефона</label>
-            <input type="tel" id="phone" name="phone" class="form-control" value="{{ old('phone') }}">
+            <input type="tel" id="phone" name="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}">
         </div>
+        @error('phone') @enderror
         <div class="form-group">
             <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}">
+            <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
         </div>
+        @error('email') @enderror
         <div class="form-group">
             <label for="text">Запрос</label>
-            <textarea id="text" name="text" class="form-control">{{ old('text') }}</textarea>
+            <textarea id="text" name="text" class="form-control @error('text') is-invalid @enderror">{{ old('text') }}</textarea>
         </div>
-
+        @error('text') @enderror
         <br>
         <button type="submit" class="btn btn-success">Сохранить</button>
     </form>

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\QueryBuilders;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class UsersQueryBuilder extends QueryBuilder
+final class UsersQueryBuilder extends QueryBuilder
 {
     public Builder $model;
 

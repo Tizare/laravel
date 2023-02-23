@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\QueryBuilders\NewsQueryBuilder;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
@@ -34,22 +33,4 @@ class NewsController extends Controller
         $news = $newsQueryBuilder->getNewsById($id);
         return \view('news.show', ['news' => $news,]);
     }
-
-
-
-
-
-//    use NewsTrait;
-//
-//    public function index(): View
-//    {
-//        return \view('news.index', [
-//            'news' => $this->getNews()
-//        ]);
-//    }
-//
-//    public function show(int $id): View
-//    {
-//        return \view('news.show', ['news' => $this->getNews($id)]);
-//    }
 }

@@ -30,12 +30,16 @@ class EditRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'min:5', 'max:200'],
             'description' => ['required', 'string', 'min:20', 'max:200'],
-            'text' => ['required', 'string', 'min:50', 'max:1000'],
+            'text' => ['required', 'string', 'min:50', 'max:5000'],
             'author' => ['required', 'string', 'min:2', 'max:50'],
             'status' => ['required', new Enum(NewsStatus::class)],
             'category_id' => ['required', 'exists:categories,id'],
         ];
     }
+
+    /**
+     * @return string[]
+     */
     public function attributes(): array
     {
         return [

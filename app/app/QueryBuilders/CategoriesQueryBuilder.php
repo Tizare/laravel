@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\QueryBuilders;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Category;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 final class CategoriesQueryBuilder extends QueryBuilder
 {
@@ -15,21 +18,22 @@ final class CategoriesQueryBuilder extends QueryBuilder
         $this->model = Category::query();
     }
 
+    /**
+     * @return Collection
+     */
     public function getAll(): Collection
     {
         return $this->model->get();
     }
 
-    public function getNewsByCategory(int $id): Collection
+    /**
+     * @param int $id
+     * @param int $quantity
+     * @return LengthAwarePaginator
+     */
+    public function getNewsByCategory(int $id, int $quantity = 20): LengthAwarePaginator
     {
-        return $this->model
-            ->join('category_has_news', function ($join){
-            $join->on('categories.id', '=', 'category_has_news.category_id');
-        })
-            ->join('news', function ($join){
-                $join->on('news.id', '=', 'category_has_news.news_id');
-            })->where('categories.id', $id)->get();
-
+        return $this->model->with('news')->where('categories.id', $id)->paginate($quantity);
     }
 
 }

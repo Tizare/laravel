@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\News\CreateRequest;
 use App\Http\Requests\News\EditRequest;
 use App\Models\News;
+use App\Services\UploadFileService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use App\QueryBuilders\NewsQueryBuilder;
 use App\QueryBuilders\CategoriesQueryBuilder;
 use App\Enums\NewsStatus;
-use Illuminate\Http\Response;
 
 class NewsController extends Controller
 {
@@ -46,11 +47,17 @@ class NewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateRequest $request
+     * @param UploadFileService $uploadFileService
      * @return RedirectResponse
      */
-    public function store(CreateRequest $request): RedirectResponse
+    public function store(CreateRequest $request,
+                          UploadFileService $uploadFileService): RedirectResponse
     {
         $news = new News($request->validated());
+
+        if($request->hasFile('image')) {
+            $news['image'] = $uploadFileService->uploadImage($request->file('image'));
+        }
 
         if ($news->save()) {
             $news->categories()->sync($request->input('category_id'));
@@ -93,11 +100,18 @@ class NewsController extends Controller
      *
      * @param EditRequest $request
      * @param News $news
+     * @param UploadFileService $uploadFileService
      * @return RedirectResponse
      */
-    public function update(EditRequest $request, News $news): RedirectResponse
+    public function update(EditRequest $request, News $news,
+                           UploadFileService $uploadFileService): RedirectResponse
     {
-        $news = $news->fill($request->except('_token', 'category_id'));
+
+        $news = $news->fill($request->validated());
+
+        if($request->hasFile('image')) {
+            $news['image'] = $uploadFileService->uploadImage($request->file('image'));
+        }
 
         if ($news->save()) {
             $news->categories()->sync($request->input('category_id'));

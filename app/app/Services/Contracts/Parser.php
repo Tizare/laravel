@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Contracts;
 
 interface Parser
@@ -11,8 +13,8 @@ interface Parser
     public function setLink(string $link): self;
 
     /**
-     * @return array
+     * @return void
      */
-    public function getParseData(): array;
+    public function saveParseData(): void;
 
 }
